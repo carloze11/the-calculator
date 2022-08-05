@@ -1,12 +1,17 @@
 // Inital variables
-let firstVal = 0;
-let secondVal = 0;
+let firstVal;
+let secondVal;
 
 // Operator Functions
 const add = (a,b) => +a + +b;
 const subtract = (a,b) => +a - +b;
 const multiply = (a,b) => +a * +b;
-const divide = (a,b) => +a / +b;
+const divide = (a,b) => {
+  if (b === '0'){
+    return 'dreamland';
+  }
+  return +a / +b;
+};
 const operate = (op, n1, n2) => {
   if (op === 'add') {
       disVal = add(n1, n2).toString();      
@@ -15,23 +20,18 @@ const operate = (op, n1, n2) => {
     } else if (op === 'multiply') {
       disVal = multiply(n1, n2).toString();
     } else if (op === 'divide') {
+      if (n2 === '0'){
+        disVal = 'dreamland'
+      }
       disVal = divide(n1, n2).toString();
     }
-  // if (op === 'add'){
-  //   return add(n1,n2);
-  // } else if (op === 'subtract'){
-  //   return subtract(n1,n2);
-  // } else if (op === 'multiply'){
-  //   return multiply(n1,n2);
-  // } else if (op === 'divide'){
-  //   return divide(n1,n2);
-  // }
 };
 
 
 const display = document.querySelector('.display');
 let disVal = '0';
 const num = document.querySelectorAll('.num');
+const dot = document.querySelector('#dot');
 
 // Display numbers when clicked 
 const clickNum = () => {
@@ -40,7 +40,7 @@ const clickNum = () => {
       if (display.textContent === '0' || 0){
         disVal = '';
       };
-      if (number.classList[1] === "num"){
+      if (number.classList[1] === "num") {
         disVal += number.textContent;
         display.textContent = disVal;
       };      
@@ -59,10 +59,10 @@ const clearVal = document.querySelector('.clear');
 const clearDisplay = () => {
   clearVal.addEventListener('click', () =>{
     display.textContent = '0';
-    disVal = '0';
-    opUsed = '';
-    firstVal = '0';
-    secondVal = '0';
+    disVal = null;
+    opUsed = null;
+    firstVal = null;
+    secondVal = null;
   });
 }
 
@@ -83,8 +83,7 @@ const opNext = () => {
         operate(opUsed, firstVal, secondVal);
         display.textContent = disVal.substring(0,9);
         firstVal = display.textContent;
-        console.log(firstVal)
-        disVal = ''
+        disVal = '';
         secondVal = '0';
         opUsed = operator.classList[2];
       }
@@ -109,4 +108,3 @@ const onEquals = () => {
 }
 
 onEquals();
-
