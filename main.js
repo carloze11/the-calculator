@@ -8,15 +8,24 @@ const subtract = (a,b) => +a - +b;
 const multiply = (a,b) => +a * +b;
 const divide = (a,b) => +a / +b;
 const operate = (op, n1, n2) => {
-  if (op === 'add'){
-    return add(n1,n2);
-  } else if (op === 'subtract'){
-    return subtract(n1,n2);
-  } else if (op === 'multiply'){
-    return multiply(n1,n2);
-  } else if (op === 'divide'){
-    return divide(n1,n2);
-  }
+  if (op === 'add') {
+      disVal = add(n1, n2).toString();      
+    } else if (op === 'subtract') {
+      disVal = subtract(n1, n2).toString();
+    } else if (op === 'multiply') {
+      disVal = multiply(n1, n2).toString();
+    } else if (op === 'divide') {
+      disVal = divide(n1, n2).toString();
+    }
+  // if (op === 'add'){
+  //   return add(n1,n2);
+  // } else if (op === 'subtract'){
+  //   return subtract(n1,n2);
+  // } else if (op === 'multiply'){
+  //   return multiply(n1,n2);
+  // } else if (op === 'divide'){
+  //   return divide(n1,n2);
+  // }
 };
 
 
@@ -51,6 +60,7 @@ const clearDisplay = () => {
   clearVal.addEventListener('click', () =>{
     display.textContent = '0';
     disVal = '0';
+    opUsed = '';
     firstVal = '0';
     secondVal = '0';
   });
@@ -64,12 +74,23 @@ let opUsed = '';
 const opNext = () => {
   op.forEach(operator => {
     operator.addEventListener('click', () => {
-      firstVal = disVal.substring(0,9);
-      disVal = '';
-      opUsed = operator.classList[2];
-    })
+      if (opUsed === ''){
+        firstVal = disVal.substring(0,9);
+        disVal = '';
+        opUsed = operator.classList[2];
+      } else {
+        secondVal = disVal.substring(0,9);
+        operate(opUsed, firstVal, secondVal);
+        display.textContent = disVal.substring(0,9);
+        firstVal = display.textContent;
+        console.log(firstVal)
+        disVal = ''
+        secondVal = '0';
+        opUsed = operator.classList[2];
+      }
+   })
   })
-} 
+}
 
 opNext();
 
@@ -79,18 +100,11 @@ const equals = document.querySelector('.equals')
 const onEquals = () => {
   equals.addEventListener('click', () => {
     secondVal = disVal.substring(0,9);
-    if (opUsed === 'add') {
-      disVal = add(firstVal, secondVal).toString();      
-    } else if (opUsed === 'subtract') {
-      disVal = subtract(firstVal, secondVal).toString();
-    } else if (opUsed === 'multiply') {
-      disVal = multiply(firstVal, secondVal).toString();
-    } else if (opUsed === 'divide') {
-      disVal = divide(firstVal, secondVal).toString();
-    }
-    
+    operate(opUsed, firstVal, secondVal);
     display.textContent = disVal.substring(0,9);
     firstVal = display.textContent;
+    secondVal = '0';
+    opUsed = '';
   })
 }
 
