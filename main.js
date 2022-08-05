@@ -32,6 +32,11 @@ const display = document.querySelector('.display');
 let disVal = '0';
 const num = document.querySelectorAll('.num');
 const dot = document.querySelector('#dot');
+const addDot = () => {
+  if (!disVal.includes('.')){
+    disVal += '.'; 
+  }
+}
 
 // Display numbers when clicked 
 const clickNum = () => {
@@ -40,8 +45,12 @@ const clickNum = () => {
       if (display.textContent === '0' || 0){
         disVal = '';
       };
-      if (number.classList[1] === "num") {
-        disVal += number.textContent;
+      if (number.classList[1] === 'num') {
+        if (number.classList[2] === 'dot'){
+          addDot();
+        } else {
+          disVal += number.textContent;
+        }
         display.textContent = disVal;
       };      
       if (disVal.length >= 9){
