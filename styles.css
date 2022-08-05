@@ -57,6 +57,7 @@ body {
   background-color: rgb(65,148,249);
 }
 
-.op {
+.op,
+.equals {
   background-color: darkorange;
 }
